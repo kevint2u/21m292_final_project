@@ -24,3 +24,10 @@ html, body {
 	margin:0px;
 }
 
+#header {
+  text-align: center;
+  line-height: 100px;
+
+  height: 100px;
+  background-color: grey;
+}
