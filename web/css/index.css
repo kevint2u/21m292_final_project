@@ -1,0 +1,26 @@
+@font-face {
+font-family: GothamBold;
+src: url("../resources/Gotham/GothamHTF-Bold.otf") format("opentype");
+}
+@font-face {
+font-family: Gotham;
+src: url("../resources/Gotham/GothamHTF-Black.otf") format("opentype");
+}
+@font-face {
+font-family: GothamThin;
+src: url("../resources/Gotham/GothamHTF-Thin.otf") format("opentype");
+}
+@font-face {
+font-family: GothamLight;
+src: url("../resources/Gotham/GothamHTF-Light.otf") format("opentype");
+}
+
+
+html, body {
+  font-family: 'GothamLight', sans-serif;
+	height: 100%;
+	min-height: 100%;
+	border:0px;
+	margin:0px;
+}
+
