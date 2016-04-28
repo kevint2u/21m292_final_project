@@ -36,7 +36,7 @@ html, body {
   text-align: center;
   line-height: 100px;
 
-  height: 100px;
+  height: 200px;
   background-color: #808080;
 }
 
@@ -45,7 +45,7 @@ html, body {
   text-align: center;
   border-style:solid;
   border-color:red;
-  border-width: 1px
+  border-width: 1px;
 }
 
 #coremelody_panel {
@@ -56,6 +56,80 @@ html, body {
   border-width: 1px;
 }
 
+#gong_g {
+
+}
+
+#gong_g_touch{
+  position: absolute;
+  height: 230px;
+  width: 230px;
+  margin: -320px 0px 0px 120px;
+}
+
+#gong_p {
+
+}
+
+#gong_p_touch{
+  position: absolute;
+  height: 168px;
+  width: 168px;
+  margin: -258px 0px 0px 69px;
+}
+
+#gong_t{
+
+}
+
+#gong_t_touch{
+  position: absolute;
+  height: 100px;
+  width: 105px;
+  margin: -200px 0px 0px 100px;
+}
+
+#kempli{
+
+}
+
+#kempli_touch{
+  position: absolute;
+  height: 80px;
+  width: 100px;
+  margin: -150px 0px 0px 00px;
+}
+
+#jegogan {
+
+}
+
+#jegogan_touch {
+
+}
+
+#calung {
+
+}
+
+#calung_touch {
+
+}
+
+#penyacah {
+
+}
+
+#penyacah_touch{
+
+}
+
 .instrument {
   display: inline-block;
+}
+
+.touchable {
+  border-style:solid;
+  border-color:green;
+  border-width: 1px;
 }
