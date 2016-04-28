@@ -41,15 +41,21 @@ html, body {
 }
 
 #gong_panel {
-  height: 100px;
+  position: relative;
+  text-align: center;
   border-style:solid;
   border-color:red;
   border-width: 1px
 }
 
 #coremelody_panel {
-  height: 100px;
+  position: relative;
+  text-align: center;
   border-style:solid;
   border-color:blue;
   border-width: 1px;
+}
+
+.instrument {
+  display: inline-block;
 }
