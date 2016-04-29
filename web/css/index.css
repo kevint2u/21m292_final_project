@@ -1,3 +1,13 @@
+div {
+  -webkit-user-select: none; /* Chrome/Safari */        
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+ */
+
+  /* Rules below not implemented in browsers yet */
+  -o-user-select: none;
+  user-select: none;
+}
+
 @font-face {
 font-family: GothamBold;
 src: url("../resources/Gotham/GothamHTF-Bold.otf") format("opentype");
@@ -97,33 +107,139 @@ html, body {
   position: absolute;
   height: 80px;
   width: 100px;
-  margin: -150px 0px 0px 00px;
+  margin: -150px 0px 0px 0px;
 }
 
 #jegogan {
 
 }
 
-#jegogan_touch {
+#j1 {
+  position: absolute;
+  height: 178px;
+  width: 52px;
+  margin: -255px 0px 0px 123px;
+}
 
+#j2 {
+  position: absolute;
+  height: 178px;
+  width: 52px;
+  margin: -255px 0px 0px 175px;
+}
+
+#j3 {
+  position: absolute;
+  height: 170px;
+  width: 52px;
+  margin: -252px 0px 0px 227px;
+}
+
+#j5 {
+  position: absolute;
+  height: 165px;
+  width: 50px;
+  margin: -250px 0px 0px 279px;
+}
+
+#j6 {
+  position: absolute;
+  height: 165px;
+  width: 50px;
+  margin: -250px 0px 0px 329px;
 }
 
 #calung {
 
 }
 
-#calung_touch {
+#c1 {
+  position: absolute;
+  height: 140px;
+  width: 40px;
+  margin: -203px 0px 0px 100px;
+}
 
+#c2 {
+  position: absolute;
+  height: 140px;
+  width: 42px;
+  margin: -203px 0px 0px 140px;
+}
+
+#c3 {
+  position: absolute;
+  height: 140px;
+  width: 42px;
+  margin: -203px 0px 0px 182px;
+}
+
+#c5 {
+  position: absolute;
+  height: 140px;
+  width: 38px;
+  margin: -203px 0px 0px 224px;
+}
+
+#c6 {
+  position: absolute;
+  height: 135px;
+  width: 38px;
+  margin: -203px 0px 0px 262px;
 }
 
 #penyacah {
 
 }
 
-#penyacah_touch{
-
+#p5_low {
+  position: absolute;
+  height: 105px;
+  width: 32px;
+  margin: -152px 0px 0px 42px;
 }
 
+#p6_low {
+  position: absolute;
+  height: 105px;
+  width: 33px;
+  margin: -152px 0px 0px 74px; 
+}
+
+#p1 {
+  position: absolute;
+  height: 105px;
+  width: 31px;
+  margin: -152px 0px 0px 107px; 
+}
+
+#p2 {
+  position: absolute;
+  height: 100px;
+  width: 31px;
+  margin: -149px 0px 0px 138px; 
+}
+
+#p3 {
+  position: absolute;
+  height: 100px;
+  width: 28px;
+  margin: -149px 0px 0px 169px; 
+}
+
+#p5 {
+  position: absolute;
+  height: 100px;
+  width: 28px;
+  margin: -149px 0px 0px 197px; 
+}
+
+#p6 {
+  position: absolute;
+  height: 95px;
+  width: 30px;
+  margin: -149px 0px 0px 225px; 
+}
 .instrument {
   display: inline-block;
 }
@@ -132,4 +248,9 @@ html, body {
   border-style:solid;
   border-color:green;
   border-width: 1px;
+}
+
+.text_label {
+  font-size: 20px;
+  color: black;
 }
