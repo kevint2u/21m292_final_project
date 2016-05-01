@@ -240,14 +240,24 @@ html, body {
   width: 30px;
   margin: -149px 0px 0px 225px; 
 }
+
+
+
+
+
+
+
+
 .instrument {
   display: inline-block;
 }
 
+.selected {
+  outline:3px solid green;
+}
+
 .touchable {
-  border-style:solid;
-  border-color:green;
-  border-width: 1px;
+
 }
 
 .text_label {
