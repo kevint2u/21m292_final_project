@@ -30,6 +30,7 @@ var p3_audio = new Audio("../web/resources/recordings/cut/p-3.wav");
 var p5_audio = new Audio("../web/resources/recordings/cut/p-5.wav");
 var p6_audio = new Audio("../web/resources/recordings/cut/p-6.wav");
 var last_played_key;
+var last_played_instrument;
 
 var audio_map_gongs = [gong_g_audio, gong_p_audio, gong_t_audio, kempli_audio];
 var audio_map_j = [j1_audio, j2_audio, j3_audio, placeholder, j5_audio, j6_audio];
@@ -66,7 +67,14 @@ function cycleInstruments() {
 
 function playSound(instrument, key, shifted) {
     console.log('playSound: ', instrument, key, shifted);
+    console.log('last_played_key: ', instrument);
     
+    // Check if you need to dampen instrument
+    if (last_played_instrument == instrument) {
+        last_played_key.pause();
+        last_played_key.currentTime = 0;
+    }
+
     // If gong, simply play sound
     if (gongs.indexOf(instrument) >= 0) { 
         current_index = gongs.indexOf(instrument);
@@ -94,6 +102,8 @@ function playSound(instrument, key, shifted) {
     current_audio.pause();
     current_audio.currentTime = 0;
     current_audio.play();
+    last_played_key = current_audio;
+    last_played_instrument = instrument;
 }
 
 
