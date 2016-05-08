@@ -44,7 +44,6 @@ html, body {
 
 #control_bar {
   text-align: center;
-  line-height: 100px;
 
   height: 200px;
   background-color: #808080;
@@ -64,6 +63,11 @@ html, body {
   border-style:solid;
   border-color:blue;
   border-width: 1px;
+}
+
+#footer {
+  text-align: center;
+  margin-top:25px;
 }
 
 #gong_g {

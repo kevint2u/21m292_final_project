@@ -37,6 +37,10 @@ var audio_map_j = [j1_audio, j2_audio, j3_audio, placeholder, j5_audio, j6_audio
 var audio_map_c = [c1_audio, c2_audio, c3_audio, placeholder, c5_audio, c6_audio];
 var audio_map_p = [p1_audio, p2_audio, p3_audio, placeholder, p5_audio, p6_audio, p5_low_audio, p6_low_audio];
 var audio_map_master = [audio_map_gongs, audio_map_j, audio_map_c, audio_map_p];
+
+// Control variables
+var current_tempo = 0; 
+
 // Functions
 function cycleInstruments() {
 
@@ -106,8 +110,9 @@ function playSound(instrument, key, shifted) {
     last_played_instrument = instrument;
 }
 
-
 $(document).ready(function() {
+    // Set up control panel
+    $("#metronome_stop").prop("disabled",true);
     // Make instruments clickable
     $('.touchable').click(function(e) {  
         var instrument_id = e.target.id;
@@ -256,12 +261,18 @@ $(document.body).keydown(function(e) {
     // Capture NUMBER keypress
     number_set = [49, 50, 51, 53, 54];
     if (number_set.indexOf(code) >= 0) { 
-        e.preventDefault();
-        console.log('NUMBER pressed: ', code, "  Shift: ", shifted); 
-        // Check which instrument is selected
-        if (gongs.indexOf(current_instrument) < 0) { 
-            // Core melody instrument selected, trigger play
-            playSound(current_instrument, code - 48, shifted); // offset to get key number
+        // e.preventDefault();
+        if ($("#form_tempo_input").is(":focus")){
+            // skip playing sound
+            console.log('input text focus, do not play');
+        }
+        else {
+            console.log('NUMBER pressed: ', code, "  Shift: ", shifted); 
+            // Check which instrument is selected
+            if (gongs.indexOf(current_instrument) < 0) { 
+                // Core melody instrument selected, trigger play
+                playSound(current_instrument, code - 48, shifted); // offset to get key number
+            }
         }
     }
 });
@@ -269,4 +280,16 @@ $(document.body).keydown(function(e) {
 // Tracks SHIFT key's status
 $(document).on('keyup keydown', function(e) {
     shifted = e.shiftKey
+});
+
+// Tracks changes in TEMPO form
+$("#metronome_start").click(function() {
+    console.log('metronome start');
+    current_tempo = form_tempo_input.value;
+    console.log('current tempo: ', current_tempo);
+    $("#metronome_stop").prop("disabled",false);
+});
+$("#metronome_stop").click(function() {
+    console.log('metronome stop')
+    $("#metronome_stop").prop("disabled",true);
 });
