@@ -70,6 +70,17 @@ html, body {
   margin-top:25px;
 }
 
+.form_bar {
+  text-align: center;
+  padding-top: 10px;
+}
+
+#beat_number {
+  font-size: 20px;
+  padding-top: 10px;
+}
+
+
 #gong_g {
 
 }

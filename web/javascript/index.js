@@ -40,7 +40,9 @@ var audio_map_master = [audio_map_gongs, audio_map_j, audio_map_c, audio_map_p];
 
 // Control variables
 var current_tempo = 0; 
-
+var current_beats_per_cycle = 0;
+var current_beat = 0;
+var looping = false; 
 // Functions
 function cycleInstruments() {
 
@@ -109,6 +111,41 @@ function playSound(instrument, key, shifted) {
     last_played_key = current_audio;
     last_played_instrument = instrument;
 }
+
+// bpm = beats per minute; bpc = beats per cycle;
+function playMetronome(bpm, bpc){
+    console.log('playing metronome, (BPM, BPC): ', {bpm, bpc});
+    current_interval = 60000.00 / bpm;
+    console.log("interval: ", current_interval);
+    temp = parseInt($("#beat_number").text()) + 1;
+    $("#beat_number").text(temp);
+    setTimeout(playSound('kempli', 0, false),current_interval);
+    current_beat += 1;
+    timeout(current_beat, bpc, current_interval);
+    current_beat = 0;
+}
+
+function timeout(current_beat, bpc, interval) {
+    setTimeout(function () {
+        // Then recall the parent function to
+        // create a recursive loop.
+        if (looping == true) {
+            temp = (parseInt($("#beat_number").text()) + 1) % bpc;
+            $("#beat_number").text(temp);
+            setTimeout(playSound('kempli', 0, false), interval);
+            current_beat = (current_beat + 1) % bpc;
+            timeout(current_beat, bpc, interval);
+        }
+        // if (current_beat < bpc) {
+        //     temp = parseInt($("#beat_number").text()) + 1;
+        //     $("#beat_number").text(temp);
+        //     setTimeout(playSound('kempli', 0, false), interval);
+        //     current_beat += 1;
+        //     timeout(current_beat, bpc, interval);
+        // }
+    }, interval);
+}
+
 
 $(document).ready(function() {
     // Set up control panel
@@ -284,12 +321,27 @@ $(document).on('keyup keydown', function(e) {
 
 // Tracks changes in TEMPO form
 $("#metronome_start").click(function() {
-    console.log('metronome start');
+    // Reset cycling
+    looping = false; 
+    current_beat = 0;
+    $("#beat_number").text(current_beat);
+    $("#metronome_start").prop("disabled",true);
     current_tempo = form_tempo_input.value;
-    console.log('current tempo: ', current_tempo);
-    $("#metronome_stop").prop("disabled",false);
+    current_beats_per_cycle = form_cycle_input.value; 
+    if (current_tempo != 0) {
+        console.log('metronome start');
+        console.log('current tempo: ', current_tempo);
+        console.log('current beats per cycle: ', current_beats_per_cycle);
+        $("#metronome_stop").prop("disabled",false);
+        looping = true;
+        playMetronome(current_tempo, current_beats_per_cycle);
+    }
 });
 $("#metronome_stop").click(function() {
     console.log('metronome stop')
     $("#metronome_stop").prop("disabled",true);
+    $("#metronome_start").prop("disabled",false);
+    // Reset cycling
+    looping = false;
+    current_beat = 0;
 });

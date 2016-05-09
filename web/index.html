@@ -12,12 +12,19 @@
 </div>
 
 <div id="control_bar">
-  <form id="form_tempo">
+  <form id="form_tempo" class="form_bar">
     Tempo (bpm): 
-    <input type="number" id="form_tempo_input" name="quantity" min="0" max="200">
+    <input type="number" id="form_tempo_input" name="quantity" min="0" max="200" value="60">
     <button id="metronome_start" type="button">Start Kempli</button>
     <button id="metronome_stop" type="button" class="disabled">Stop Kempli</button>
   </form>
+  <form id="form_cycle" class="form_bar">
+    Beats per cycle: 
+    <input type="number" id="form_cycle_input" name="quantity" min="0" max="200" value="16">
+  </form> 
+  <div id="beat_number">
+    0
+  </div>
 </div>
 
 <div id="gong_panel">
