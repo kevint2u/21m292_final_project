@@ -43,7 +43,21 @@ var current_tempo = 0;
 var current_beats_per_cycle = 0;
 var current_beat = 0;
 var looping = false; 
+var loop_round = 0;
+var loop_sounds_map = [];
+var loop_times_map = [];
+var global_time = 0;
+var current_loop_sounds = []; 
+var current_loop_times = [];
+var recording = false;
+
 // Functions
+function startTimer() {
+    setInterval(function(){
+        global_time += 1; 
+    }, 1);
+}
+
 function cycleInstruments() {
 
     // Get current instrument 
@@ -73,7 +87,7 @@ function cycleInstruments() {
 
 function playSound(instrument, key, shifted) {
     console.log('playSound: ', instrument, key, shifted);
-    console.log('last_played_key: ', instrument);
+    // console.log('last_played_key: ', instrument);
     
     // Check if you need to dampen instrument
     if (last_played_instrument == instrument) {
@@ -107,9 +121,20 @@ function playSound(instrument, key, shifted) {
     }
     current_audio.pause();
     current_audio.currentTime = 0;
+
+    // Add to recording arrays
+    if (recording & instrument != 'kempli') {
+        // console.log('pushed');
+        temp = [instrument, key, shifted];
+        current_loop_sounds.push(temp); 
+        current_loop_times.push(global_time);
+    }
+
     current_audio.play();
     last_played_key = current_audio;
     last_played_instrument = instrument;
+
+    //console.log('\n ARRAYS: ', current_loop_sounds, current_loop_times);
 }
 
 // bpm = beats per minute; bpc = beats per cycle;
@@ -119,33 +144,98 @@ function playMetronome(bpm, bpc){
     console.log("interval: ", current_interval);
     temp = parseInt($("#beat_number").text()) + 1;
     $("#beat_number").text(temp);
-    setTimeout(playSound('kempli', 0, false),current_interval);
+    playSound('kempli', 0, false);
+    // setTimeout(function() {playSound('kempli', 0, false);},current_interval);
     current_beat += 1;
-    timeout(current_beat, bpc, current_interval);
+    timeout(current_beat, bpc, current_interval, loop_round);
     current_beat = 0;
 }
 
-function timeout(current_beat, bpc, interval) {
+function timeout(current_beat, bpc, interval, loop_round) {
     setTimeout(function () {
         // Then recall the parent function to
         // create a recursive loop.
         if (looping == true) {
+
             temp = (parseInt($("#beat_number").text()) + 1) % bpc;
+            if (temp == 0) {
+                loop_round += 1; 
+                console.log('LOOP ROUND: ', loop_round);
+                beginRecording(loop_round);
+                playRecorded();
+                endRecording();
+            }
+
             $("#beat_number").text(temp);
+            console.log('global_time: ', global_time);
             setTimeout(playSound('kempli', 0, false), interval);
             current_beat = (current_beat + 1) % bpc;
-            timeout(current_beat, bpc, interval);
+            timeout(current_beat, bpc, interval, loop_round);
         }
-        // if (current_beat < bpc) {
-        //     temp = parseInt($("#beat_number").text()) + 1;
-        //     $("#beat_number").text(temp);
-        //     setTimeout(playSound('kempli', 0, false), interval);
-        //     current_beat += 1;
-        //     timeout(current_beat, bpc, interval);
-        // }
     }, interval);
 }
 
+function beginRecording(loop_round) {
+    recording = true; 
+}
+
+function endRecording() {
+    // Clear arrays
+    current_loop_sounds.length = 0; 
+    current_loop_times.length = 0;
+
+    // Set anchor time
+    current_loop_sounds.push(null); 
+    current_loop_times.push(global_time);
+}
+
+function playRecorded() {
+    recording = false; 
+    // Save arrays to loop map
+    loop_sounds_map.push(current_loop_sounds);
+    loop_times_map.push(current_loop_times);
+
+    console.log("\n\nplaying recorded!");
+    // console.log(loop_sounds_map);
+    // console.log(loop_times_map);
+    s = loop_sounds_map.length;
+    i = 1;
+    // console.log('loop sounds: ', loop_sounds_map);
+    // console.log('loop times: ', loop_times_map);
+    while (i < s) {
+        // Retrieve from map
+        cur_sounds = loop_sounds_map[i];
+        cur_times = loop_times_map[i];
+        // console.log(i);
+        // console.log(cur_sounds);
+        // console.log(cur_times);
+        // Determine anchor time
+        base = cur_times[0]
+        j = cur_sounds.length;
+        k = 1;
+
+        // Set timeouts
+        while (k < j) {
+            console.log('k,j: ', k, j);
+            cur_interval = cur_times[k] - base;
+            console.log(cur_interval, cur_sounds[k][0], cur_sounds[k][1], cur_sounds[k][2]);
+            t1 = cur_sounds[k][0];
+            t2 = cur_sounds[k][1];
+            t3 = cur_sounds[k][2];
+            setDelay(t1, t2, t3, cur_interval);
+            k += 1;
+        }
+
+        i += 1;
+    }
+    recording = true; 
+}
+
+function setDelay(t1, t2, t3, interval) {
+    setTimeout( function() {
+        playSound(t1, t2, t3);
+    }, interval*4);
+}  
 
 $(document).ready(function() {
     // Set up control panel
@@ -222,6 +312,8 @@ $(document).ready(function() {
             playSound('penyacah', 6, false);
         }
     });
+    // Initiate global timer
+    startTimer();
 });
 
 $(document.body).keydown(function(e) {
@@ -324,6 +416,7 @@ $("#metronome_start").click(function() {
     // Reset cycling
     looping = false; 
     current_beat = 0;
+    loop_round = 0;
     $("#beat_number").text(current_beat);
     $("#metronome_start").prop("disabled",true);
     current_tempo = form_tempo_input.value;
