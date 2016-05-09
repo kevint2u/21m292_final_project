@@ -85,7 +85,7 @@ function cycleInstruments() {
     $(old_instrument_string).removeClass("selected")
 }
 
-function playSound(instrument, key, shifted) {
+function playSound(instrument, key, shifted, playback) {
     console.log('playSound: ', instrument, key, shifted);
     // console.log('last_played_key: ', instrument);
     
@@ -123,7 +123,7 @@ function playSound(instrument, key, shifted) {
     current_audio.currentTime = 0;
 
     // Add to recording arrays
-    if (recording & instrument != 'kempli') {
+    if (recording & instrument != 'kempli' & playback == false) {
         // console.log('pushed');
         temp = [instrument, key, shifted];
         current_loop_sounds.push(temp); 
@@ -144,7 +144,7 @@ function playMetronome(bpm, bpc){
     console.log("interval: ", current_interval);
     temp = parseInt($("#beat_number").text()) + 1;
     $("#beat_number").text(temp);
-    playSound('kempli', 0, false);
+    playSound('kempli', 0, false, false);
     // setTimeout(function() {playSound('kempli', 0, false);},current_interval);
     current_beat += 1;
     timeout(current_beat, bpc, current_interval, loop_round);
@@ -168,7 +168,7 @@ function timeout(current_beat, bpc, interval, loop_round) {
 
             $("#beat_number").text(temp);
             console.log('global_time: ', global_time);
-            setTimeout(playSound('kempli', 0, false), interval);
+            setTimeout(playSound('kempli', 0, false, false), interval);
             current_beat = (current_beat + 1) % bpc;
             timeout(current_beat, bpc, interval, loop_round);
         }
@@ -181,8 +181,8 @@ function beginRecording(loop_round) {
 
 function endRecording() {
     // Clear arrays
-    current_loop_sounds.length = 0; 
-    current_loop_times.length = 0;
+    current_loop_sounds = []; 
+    current_loop_times = [];
 
     // Set anchor time
     current_loop_sounds.push(null); 
@@ -192,17 +192,25 @@ function endRecording() {
 function playRecorded() {
     recording = false; 
     // Save arrays to loop map
+    // if (loop_sounds_map.indexOf(current_loop_sounds) < 0) {
+
+    // } 
+    // if (loop_times_map.indexOf(current_times_sounds) < 0) {
+
+    // } 
     loop_sounds_map.push(current_loop_sounds);
     loop_times_map.push(current_loop_times);
 
     console.log("\n\nplaying recorded!");
-    // console.log(loop_sounds_map);
-    // console.log(loop_times_map);
+    console.log(loop_sounds_map);
+    console.log(loop_times_map);
     s = loop_sounds_map.length;
     i = 1;
+    console.log('s: ', s);
     // console.log('loop sounds: ', loop_sounds_map);
     // console.log('loop times: ', loop_times_map);
     while (i < s) {
+        console.log('i: ', i);
         // Retrieve from map
         cur_sounds = loop_sounds_map[i];
         cur_times = loop_times_map[i];
@@ -213,10 +221,11 @@ function playRecorded() {
         base = cur_times[0]
         j = cur_sounds.length;
         k = 1;
-
+        console.log('cursounds: ', cur_sounds);
+        console.log('j: ', j);
         // Set timeouts
         while (k < j) {
-            console.log('k,j: ', k, j);
+            console.log("k: ", k);
             cur_interval = cur_times[k] - base;
             console.log(cur_interval, cur_sounds[k][0], cur_sounds[k][1], cur_sounds[k][2]);
             t1 = cur_sounds[k][0];
@@ -233,7 +242,7 @@ function playRecorded() {
 
 function setDelay(t1, t2, t3, interval) {
     setTimeout( function() {
-        playSound(t1, t2, t3);
+        playSound(t1, t2, t3, true);
     }, interval*4);
 }  
 
@@ -246,70 +255,70 @@ $(document).ready(function() {
         console.log(instrument_id);
         // Call correct sound
         if (instrument_id == "gong_g_touch") {
-            playSound('gong_g', 0, false);
+            playSound('gong_g', 0, false, false);
         }
         if (instrument_id == "gong_p_touch") {
-            playSound('gong_p', 0, false);
+            playSound('gong_p', 0, false, false);
         }
         if (instrument_id == "gong_t_touch") {
-            playSound('gong_t', 0, false);
+            playSound('gong_t', 0, false, false);
         }
         if (instrument_id == "kempli_touch") {
-            playSound('kempli', 0, false);
+            playSound('kempli', 0, false, false);
         }
 
         if (instrument_id == "j1") {
-            playSound('jegogan', 1, false);
+            playSound('jegogan', 1, false, false);
         }
         if (instrument_id == "j2") {
-            playSound('jegogan', 2, false);
+            playSound('jegogan', 2, false, false);
         }
         if (instrument_id == "j3") {
-            playSound('jegogan', 3, false);
+            playSound('jegogan', 3, false, false);
         }
         if (instrument_id == "j5") {
-            playSound('jegogan', 5, false);
+            playSound('jegogan', 5, false, false);
         }
         if (instrument_id == "j6") {
-            playSound('jegogan', 6, false);
+            playSound('jegogan', 6, false, false);
         }
 
         if (instrument_id == "c1") {
-            playSound('calung', 1, false);
+            playSound('calung', 1, false, false);
         }
         if (instrument_id == "c2") {
-            playSound('calung', 2, false);
+            playSound('calung', 2, false, false);
         }
         if (instrument_id == "c3") {
-            playSound('calung', 3, false);
+            playSound('calung', 3, false, false);
         }
         if (instrument_id == "c5") {
-            playSound('calung', 5, false);
+            playSound('calung', 5, false, false);
         }
         if (instrument_id == "c6") {
-            playSound('calung', 6, false);
+            playSound('calung', 6, false, false);
         }
 
         if (instrument_id == "p5_low") {
-            playSound('penyacah', 5, true);
+            playSound('penyacah', 5, true, false);
         }
         if (instrument_id == "p6_low") {
-            playSound('penyacah', 6, true);
+            playSound('penyacah', 6, true, false);
         }
         if (instrument_id == "p1") {
-            playSound('penyacah', 1, false);
+            playSound('penyacah', 1, false, false);
         }
         if (instrument_id == "p2") {
-            playSound('penyacah', 2, false);
+            playSound('penyacah', 2, false, false);
         }
         if (instrument_id == "p3") {
-            playSound('penyacah', 3, false);
+            playSound('penyacah', 3, false, false);
         }
         if (instrument_id == "p5") {
-            playSound('penyacah', 5, false);
+            playSound('penyacah', 5, false, false);
         }
         if (instrument_id == "p6") {
-            playSound('penyacah', 6, false);
+            playSound('penyacah', 6, false, false);
         }
     });
     // Initiate global timer
@@ -383,7 +392,7 @@ $(document.body).keydown(function(e) {
         // Check which instrument is selected
         if (gongs.indexOf(current_instrument) >= 0) { 
             // Gong selected, trigger play
-            playSound(current_instrument, 0, false);
+            playSound(current_instrument, 0, false, false);
         }
     }
 
@@ -400,7 +409,7 @@ $(document.body).keydown(function(e) {
             // Check which instrument is selected
             if (gongs.indexOf(current_instrument) < 0) { 
                 // Core melody instrument selected, trigger play
-                playSound(current_instrument, code - 48, shifted); // offset to get key number
+                playSound(current_instrument, code - 48, shifted, false); // offset to get key number
             }
         }
     }
@@ -417,6 +426,14 @@ $("#metronome_start").click(function() {
     looping = false; 
     current_beat = 0;
     loop_round = 0;
+
+    loop_sounds_map = [];
+    loop_times_map = [];
+    global_time = 0;
+    current_loop_sounds = []; 
+    current_loop_times = [];
+    recording = false;
+
     $("#beat_number").text(current_beat);
     $("#metronome_start").prop("disabled",true);
     current_tempo = form_tempo_input.value;
@@ -430,6 +447,7 @@ $("#metronome_start").click(function() {
         playMetronome(current_tempo, current_beats_per_cycle);
     }
 });
+
 $("#metronome_stop").click(function() {
     console.log('metronome stop')
     $("#metronome_stop").prop("disabled",true);
