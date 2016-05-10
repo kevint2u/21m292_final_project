@@ -8,20 +8,23 @@
 <body>
 
 <div id="header">
-  HELLO WORLD
-</div>
+  V I R T U A L &nbsp; G A M E L A N
+</div>  
 
 <div id="control_bar">
   <form id="form_tempo" class="form_bar">
     Tempo (bpm): 
-    <input type="number" id="form_tempo_input" name="quantity" min="0" max="200" value="60">
-    <button id="metronome_start" type="button">Start Kempli</button>
-    <button id="metronome_stop" type="button" class="disabled">Stop Kempli</button>
+    <input type="number" id="form_tempo_input" name="quantity" min="0" max="200" value="80">
+    <button id="metronome_start" type="button" class="btn btn-default">Start</button>
+    <button id="metronome_stop" type="button" class="btn btn-default">Stop</button>
   </form>
   <form id="form_cycle" class="form_bar">
     Beats per cycle: 
     <input type="number" id="form_cycle_input" name="quantity" min="0" max="200" value="8">
   </form> 
+  <div id="beat_number_label">
+    Beat number: 
+  </div>  
   <div id="beat_number">
     0
   </div>
@@ -29,7 +32,7 @@
 
 <div id="gong_panel">
   <div id="gong_g" class="instrument selected">
-    <img src="resources/images/gong_g.gif" alt="gong" style="width:500px">
+    <img src="resources/images/gong_g.png" alt="gong" style="width:500px">
     <div id="gong_g_touch" class="touchable"></div>
     <div class="text_label">GONG AGENG</div>
   </div>
@@ -82,6 +85,8 @@
   </div>
 </div>
 <div id="footer">
+  *****
+  </br>
   KEVIN TU &copy; 2016
 </div>
 

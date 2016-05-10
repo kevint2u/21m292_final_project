@@ -28,46 +28,64 @@ src: url("../resources/Gotham/GothamHTF-Light.otf") format("opentype");
 
 html, body {
   font-family: 'GothamLight', sans-serif;
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+  font-weight: 300;
+  font-size: 25px;
 	height: 100%;
 	min-height: 100%;
 	border:0px;
 	margin:0px;
+  background: url("../resources/images/background3.jpg") no-repeat center center fixed;
+  background-size: 100% 100%;
+  background-position: center bottom;
 }
+
+input {
+  text-align: center;
+}
+
 
 #header {
   text-align: center;
-  line-height: 100px;
-
-  height: 100px;
-  background-color: silver;
+  margin: 10px;
+  font-size: 25px;
 }
 
 #control_bar {
+  position: relative;
   text-align: center;
 
-  height: 200px;
-  background-color: #808080;
+  height: 100px;
+  width: 400px;
+  left: 50%;
+  margin-left: -200px;
+  border: 1px solid rgba(0, 0, 0, .5);
+}
+
+#metronome_start {
+  margin-left: 20px;
+}
+
+#metronome_stop {
+
 }
 
 #gong_panel {
   position: relative;
   text-align: center;
-  border-style:solid;
-  border-color:red;
-  border-width: 1px;
+  margin-top: 25px;
 }
 
 #coremelody_panel {
   position: relative;
   text-align: center;
-  border-style:solid;
-  border-color:blue;
-  border-width: 1px;
 }
 
 #footer {
   text-align: center;
-  margin-top:25px;
+  margin-top: 25px;
+  color:black;
+  opacity: 1.0;
 }
 
 .form_bar {
@@ -75,11 +93,28 @@ html, body {
   padding-top: 10px;
 }
 
-#beat_number {
-  font-size: 20px;
-  padding-top: 10px;
+#beat_number_label {
+  display: inline-block;
+  margin-left: 10px;
 }
 
+#beat_number {
+  margin-top: 5px;
+  position: relative;
+  text-align: center;
+  line-height: 30px;
+  height: 30px;
+  width: 30px;
+  display: inline-block;
+}
+
+#form_temp {
+  display: inline-block;
+}
+
+#form_cycle {
+  display: inline-block;
+}
 
 #gong_g {
 
@@ -283,4 +318,8 @@ html, body {
 .text_label {
   font-size: 20px;
   color: black;
+}
+
+.flash {
+  color:red;
 }

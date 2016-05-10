@@ -58,6 +58,12 @@ function startTimer() {
     }, 1);
 }
 
+function metronomeFlash(interval) {
+    setInterval(function(){
+        $("#beat_number").toggleClass("flash");
+    }, interval);
+}
+
 function cycleInstruments() {
 
     // Get current instrument 
@@ -280,9 +286,57 @@ function setDelay(t1, t2, t3, interval) {
     }, interval*4);
 }  
 
+function stopAll() {
+    gong_g_audio.pause();
+    gong_p_audio.pause();
+    gong_t_audio.pause();
+    kempli_audio.pause();
+    j1_audio.pause();
+    j2_audio.pause();
+    j3_audio.pause();
+    j5_audio.pause();
+    j6_audio.pause();
+    c1_audio.pause();
+    c2_audio.pause();
+    c3_audio.pause();
+    c5_audio.pause();
+    c6_audio.pause();
+    p5_low_audio.pause();
+    p6_low_audio.pause();
+    p1_audio.pause();
+    p2_audio.pause();
+    p3_audio.pause();
+    p5_audio.pause();
+    p6_audio.pause();
+
+    gong_g_audio.currentTime = 0;
+    gong_p_audio.currentTime = 0;
+    gong_t_audio.currentTime = 0;
+    kempli_audio.currentTime = 0;
+    j1_audio.currentTime = 0;
+    j2_audio.currentTime = 0;
+    j3_audio.currentTime = 0;
+    j5_audio.currentTime = 0;
+    j6_audio.currentTime = 0;
+    c1_audio.currentTime = 0;
+    c2_audio.currentTime = 0;
+    c3_audio.currentTime = 0;
+    c5_audio.currentTime = 0;
+    c6_audio.currentTime = 0;
+    p5_low_audio.currentTime = 0;
+    p6_low_audio.currentTime = 0;
+    p1_audio.currentTime = 0;
+    p2_audio.currentTime = 0;
+    p3_audio.currentTime = 0;
+    p5_audio.currentTime = 0;
+    p6_audio.currentTime = 0;
+}
 $(document).ready(function() {
     // Set up control panel
+    $("#metronome_start").prop("disabled",false);
+    $("#metronome_start").prop("active",true);
     $("#metronome_stop").prop("disabled",true);
+    $("#metronome_stop").prop("active",false);
     // Make instruments clickable
     $('.touchable').click(function(e) {  
         var instrument_id = e.target.id;
@@ -373,50 +427,7 @@ $(document.body).keydown(function(e) {
     // Capture ESC keypress  
     if (code === 27) {  
         e.preventDefault();
-
-        gong_g_audio.pause();
-        gong_p_audio.pause();
-        gong_t_audio.pause();
-        kempli_audio.pause();
-        j1_audio.pause();
-        j2_audio.pause();
-        j3_audio.pause();
-        j5_audio.pause();
-        j6_audio.pause();
-        c1_audio.pause();
-        c2_audio.pause();
-        c3_audio.pause();
-        c5_audio.pause();
-        c6_audio.pause();
-        p5_low_audio.pause();
-        p6_low_audio.pause();
-        p1_audio.pause();
-        p2_audio.pause();
-        p3_audio.pause();
-        p5_audio.pause();
-        p6_audio.pause();
-
-        gong_g_audio.currentTime = 0;
-        gong_p_audio.currentTime = 0;
-        gong_t_audio.currentTime = 0;
-        kempli_audio.currentTime = 0;
-        j1_audio.currentTime = 0;
-        j2_audio.currentTime = 0;
-        j3_audio.currentTime = 0;
-        j5_audio.currentTime = 0;
-        j6_audio.currentTime = 0;
-        c1_audio.currentTime = 0;
-        c2_audio.currentTime = 0;
-        c3_audio.currentTime = 0;
-        c5_audio.currentTime = 0;
-        c6_audio.currentTime = 0;
-        p5_low_audio.currentTime = 0;
-        p6_low_audio.currentTime = 0;
-        p1_audio.currentTime = 0;
-        p2_audio.currentTime = 0;
-        p3_audio.currentTime = 0;
-        p5_audio.currentTime = 0;
-        p6_audio.currentTime = 0;
+        stopAll();
     }
 
     // Capture SPACE keypress
@@ -470,6 +481,7 @@ $("#metronome_start").click(function() {
 
     $("#beat_number").text(current_beat);
     $("#metronome_start").prop("disabled",true);
+    $("#metronome_start").prop("active",false);
     current_tempo = form_tempo_input.value;
     current_beats_per_cycle = form_cycle_input.value; 
     if (current_tempo != 0) {
@@ -477,6 +489,7 @@ $("#metronome_start").click(function() {
         console.log('current tempo: ', current_tempo);
         console.log('current beats per cycle: ', current_beats_per_cycle);
         $("#metronome_stop").prop("disabled",false);
+        $("#metronome_stop").prop("active",true);
         looping = true;
         playMetronome(current_tempo, current_beats_per_cycle);
     }
@@ -485,8 +498,11 @@ $("#metronome_start").click(function() {
 $("#metronome_stop").click(function() {
     console.log('metronome stop')
     $("#metronome_stop").prop("disabled",true);
+    $("#metronome_stop").prop("active",false);
     $("#metronome_start").prop("disabled",false);
+    $("#metronome_start").prop("active",true);
     // Reset cycling
     looping = false;
     current_beat = 0;
+    stopAll();
 });
