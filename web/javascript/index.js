@@ -104,9 +104,29 @@ function playSound(instrument, key, shifted, playback) {
     else {
         if (instrument == "jegogan") {
             current_audio = audio_map_j[key-1];
+            j1_audio.pause();
+            j2_audio.pause();
+            j3_audio.pause();
+            j5_audio.pause();
+            j6_audio.pause();
+            j1_audio.currentTime = 0;
+            j2_audio.currentTime = 0;
+            j3_audio.currentTime = 0;
+            j5_audio.currentTime = 0;
+            j6_audio.currentTime = 0;
         }
         if (instrument == "calung") {
             current_audio = audio_map_c[key-1];
+            c1_audio.pause();
+            c2_audio.pause();
+            c3_audio.pause();
+            c5_audio.pause();
+            c6_audio.pause();
+            c1_audio.currentTime = 0;
+            c2_audio.currentTime = 0;
+            c3_audio.currentTime = 0;
+            c5_audio.currentTime = 0;
+            c6_audio.currentTime = 0;
         }
         if (instrument == "penyacah") {
             if (shifted == true) {
@@ -117,6 +137,20 @@ function playSound(instrument, key, shifted, playback) {
             else {
                 current_audio = audio_map_p[key-1];
             }
+            p5_low_audio.pause();
+            p6_low_audio.pause();
+            p1_audio.pause();
+            p2_audio.pause();
+            p3_audio.pause();
+            p5_audio.pause();
+            p6_audio.pause();
+            p5_low_audio.currentTime = 0;
+            p6_low_audio.currentTime = 0;
+            p1_audio.currentTime = 0;
+            p2_audio.currentTime = 0;
+            p3_audio.currentTime = 0;
+            p5_audio.currentTime = 0;
+            p6_audio.currentTime = 0;
         }
     }
     current_audio.pause();
