@@ -265,10 +265,15 @@ html, body {
 
 .instrument {
   display: inline-block;
+  opacity: 0.5;
+}
+
+.instrument:hover {
+  opacity: 1.0;
 }
 
 .selected {
-  outline:3px solid green;
+  opacity: 1.0;
 }
 
 .touchable {
